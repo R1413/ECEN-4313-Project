@@ -1,71 +1,99 @@
 import random
-import matplotlib
-size=20
-nodes[size]
+from random import shuffle
+
+size=50
+nodes=[]
 
 class node():
 	def __init__(self,edgenumber):
-		self.location=[random.randint(-1*size,size),random.randint(-1*size,size)]
 		self.edgenumber=edgenumber
-		self.edges[edgenumber]
-		for i in range(self.edgenumber):
-			self.edges[i]=-1
+		self.edges=[]
+		self.location=[random.randint(-1*size,size),random.randint(-1*size,size)]
+		#print self.edgenumber
+		
+		
 		self.aloc=0
 		
-	getlocation(self):
+	def getlocation(self):
 		return self.location
 	
-	addedge(self,node,edges):
+	def addedge(self, node, e):
 		if self.aloc==self.edgenumber:
+			#print "self(too many edges)"
 			return 0
 		if node.aloc==node.edgenumber:
+			#print "node(too many edges)"
 			return 0
 		for i in range(self.aloc):
-			if edges[i]==node:
+			if self.edges[i]==node:
+				#print "edge already exits"
 				return 0
 		if node==self:
+			#print "cannot connect to self"
 			return 0
 		
-		edges[self.aloc]=node
-		node.edges[node.aloc]
-		edges.append([self,node])
+		self.edges.append(node)
+		node.edges.append(self)
+		e.append([self,node])
 		self.aloc+=1
 		node.aloc+=1
 		return 1
+	
+	def reset(self):
+		self.edges=[]
+		self.aloc=0
+		self.location=[random.randint(-1*size,size),random.randint(-1*size,size)]
 
+		return 1
 
 		
 def sortnode(node,nodes):
 	i=0
-	dist[nodes.len]
+	dist=[]
 	for n in nodes:
-		dist[i]=[n,(n.location[0]-node.location[0])**2+(n.location[1]-node.location[1])**2]
+		dist.append([n,(n.location[0]-node.location[0])**2+(n.location[1]-node.location[1])**2])
 		i+=1
 	i=0
-	out[nodes.len]
-	for n in (sorted(dist,key=lambda dist: dist[1]]):
-		out[i]=n[0]
-		i++
+	out=[]
+	for n in (sorted(dist,key=lambda dist: dist[1])):
+		out.append(n[0])
+		i+=1
 	return out
 	
 edges=[]
 thrs=0
 for i in range(size):#build all nodes
+	#print "building nodes"
 	edgenumber=random.randint(3,4)
 	if i==size-1:#ensure that all edges can be made
 		if thrs%2:
-			edgenumber=4
-		else:
 			edgenumber=3
-	nodes[i]=node(edgenumber)
-for n in nodes:
-	dist[nodes.len]
-	if n.edgenumber>0:
-		dist=sortnode(n,nodes)
-	while n.edgenumber>0:
-		i=0
-		while !(n.addedge(dist[i]),edges):
-			i+=1
+		else:
+			edgenumber=4
+	nodes.append(node(edgenumber))
+	thrs+=edgenumber
+	
+def connect(nodes):
+	edges=[]
+	shuffle(nodes)
+	for n in nodes:
+		#print n
+		if n.edgenumber>0:
+			dist=sortnode(n,nodes)
+		while n.edgenumber>n.aloc:
+			i=0
+			while not(i>=len(nodes) or n.addedge(dist[i],edges)):
+				i+=1
+			if i==size:
+				#print "resetting"
+				for a in nodes:
+					a.reset()
+				return []#cannot make valid graph, start again
+				print"!!!"
+			#print i
+	return edges
+while not edges:
+	edges=connect(nodes)
 
 for e in edges:
 	print str(e[0].getlocation())+", "+str(e[1].getlocation())
