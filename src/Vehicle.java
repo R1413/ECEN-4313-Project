@@ -1,3 +1,4 @@
+import java.util.*;
 
 public abstract class Vehicle {
 	private int length;
@@ -6,14 +7,20 @@ public abstract class Vehicle {
 	private int dec;
 	
 	private VehicleType vehicleType;
-	public Vehicle(VehicleType vehicleType){
+	public Vehicle(){
 		//Do Something
-		this.vehicleType = vehicleType;
+		this.vehicleType = VehicleType.Car;
 		
 		//Choose vehicle attributes based on vehicle type
-		
+		if(vehicleType == VehicleType.Car){
+			length = 3; // in meters
+			acc = 5; //in meters per second
+			dec = acc;
+		}
 		
 		//Choose vehicle behavior based on driving style
+		//added later
 	}
+	
 
 }
