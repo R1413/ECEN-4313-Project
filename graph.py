@@ -96,4 +96,4 @@ while not edges:
 	edges=connect(nodes)
 
 for e in edges:
-	print str(e[0].getlocation())+", "+str(e[1].getlocation())
+	print str(e[0].getlocation())+"^"+str(e[1].getlocation())
