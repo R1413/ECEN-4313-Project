@@ -1,3 +1,5 @@
+import java.util.List;
+
 
 public class CityMap {
 	public class Intersection{
@@ -32,7 +34,29 @@ public class CityMap {
 	public void addIntersection(String edge){
 		//Use formatting of string to build connections
 	}
-	
+	Intersection[] public dijkstra(Intersection src,Intersection dst){
+		public class dnode{
+			Intersection i=new ArrayList();
+			int dist=Integer.MAX_VALUE;
+			List path;
+			dnode(Intersection inter){
+				this.i=inter;
+			}
+		}
+		List unchecked=new Arraylist();
+		List checked=new Arraylist();
+		for (Intersection i:intersections){
+			dnode node=node(i);
+			if i==src{
+				node.dist=0;
+			}
+			unchecked.add(node)
+		}
+		while(!unchecked.isEmpty()){
+			
+		}
+		
+	}
 	
 	
 	

@@ -12,16 +12,13 @@ public class Cars {
     Intersection src;
     Intersection dst;
     Intersection[] path;
-    dijkstra(CityMap map){
-    	
-    }
+    
     Cars(CityMap map){
         src=map.getrandom(); 
         dst=map.getrandom();
         while(src==dst){
             dst=map.getrandom()
         }
-        
-        
+        path=map.dijkstra(src,dst);
     }
 }
