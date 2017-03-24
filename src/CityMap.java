@@ -43,6 +43,23 @@ public class CityMap {
 				this.i=inter;
 			}
 		}
+		int getNearestIndex(Arraylist list,Intersection src){
+			int i=0;
+			int a=0;
+			int dist=Integer.MAX_VALUE;
+			for(dnode node:list){
+				int b=((src.coords[0]-node.i.coords[0])^2+(src.coords[1]-node.i.coords[1])^2)^(1/2);
+				if b<dist{
+					dist=b;
+					i=a;
+				}
+				a=a+1;
+			}
+			return i;
+		}
+		void neighbors(dnode node){
+			for()
+		}
 		List unchecked=new Arraylist();
 		List checked=new Arraylist();
 		for (Intersection i:intersections){
@@ -50,10 +67,12 @@ public class CityMap {
 			if i==src{
 				node.dist=0;
 			}
-			unchecked.add(node)
+			unchecked.add(0,node);
 		}
 		while(!unchecked.isEmpty()){
-			
+			int index=getNearestIndex(unchecked,src);
+			dnode node=unchecked.remove(index);
+			checked.add(0,node);
 		}
 		
 	}

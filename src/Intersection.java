@@ -13,7 +13,7 @@ public class Intersection {
 	}
 	
 	private Road road[];
-	
+	public int[] coords;
 	public Intersection(){
 		//Create an intersection from a node on a graph
 		
