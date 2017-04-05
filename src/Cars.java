@@ -9,15 +9,15 @@
  * @author Ben
  */
 public class Cars {
-    Intersection src;
-    Intersection dst;
-    Intersection[] path;
+    CityMap.Intersection src;
+    CityMap.Intersection dst;
+    CityMap.Intersection[] path;
     
     Cars(CityMap map){
         src=map.getrandom(); 
         dst=map.getrandom();
         while(src==dst){
-            dst=map.getrandom()
+            dst=map.getrandom();
         }
         path=map.dijkstra(src,dst);
     }

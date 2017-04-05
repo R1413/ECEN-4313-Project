@@ -38,6 +38,11 @@ public class CityMap {
 	}
 	
 	
+	public Intersection getrandom(){
+		Random r=new Random();
+		return intersections[r.nextInt(intersections.length-1)];
+	}
+	
 	//-----Dijksta's algorithm stuff-----
 	class Interwrap{
 		ArrayList<Intersection> path;
@@ -99,7 +104,7 @@ public class CityMap {
 	}
 	
 	
-	public ArrayList<Intersection> dijkstra(Intersection src, Intersection dst){
+	public Intersection[] dijkstra(Intersection src, Intersection dst){
 		//one more time
 		Interwrap current=null;
 		ArrayList<Interwrap> unchecked=new ArrayList<Interwrap>();
@@ -119,7 +124,7 @@ public class CityMap {
 			current=setCurrent(unchecked, current);
 		}
 		current.path.add(current.inter);
-		return current.path;
+		return current.path.toArray(new Intersection[current.path.size()]);
 	}
 	
 	
