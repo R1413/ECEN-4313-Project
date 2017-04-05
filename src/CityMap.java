@@ -14,14 +14,14 @@ public class CityMap {
 		private int speedLimit;
 		private int length; 
 		private Intersection end;
-		private Intersection start;
 		
-		public Road(int speedLimit, int length, Intersection end, Intersection start){
+		
+		public Road(int speedLimit, int length, Intersection end){
 			this.speedLimit = speedLimit;
 			this.length = length;
 			//this.end = new Intersection();
 			this.end = end;
-			this.start=start;
+			
 		}
 	}
 	
@@ -65,13 +65,7 @@ public class CityMap {
 	Interwrap setCurrent(ArrayList<Interwrap> unchecked,Interwrap current){//adds neighbors of the smallest unchecked node
 		
 		for(Road road:current.inter.roads){//check neighbors of current
-			Intersection i;
-			if (road.end==current.inter){
-				i= road.start;
-			}
-			else{
-				i= road.end;
-			}
+			Intersection i=road.end;
 			for(Interwrap n:unchecked){
 				if (n.inter==i){
 					
