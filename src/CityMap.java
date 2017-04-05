@@ -36,6 +36,94 @@ public class CityMap {
 	public void addIntersection(String edge){
 		//Use formatting of string to build connections
 	}
+	
+	
+	//-----Dijksta's algorithm stuff-----
+	class Interwrap{
+		ArrayList<Intersection> path;
+		final Intersection inter;
+		int dist=Integer.MAX_VALUE;
+		Interwrap(Intersection i){
+			inter=i;
+		}
+	}
+	void initDjk(ArrayList<Interwrap> unchecked, Interwrap current,Intersection src){//initializes dijkstra's algorithm
+		for(Intersection inter: this.intersections){
+			unchecked.add(new Interwrap(inter));
+			if( inter==src){
+				int index=unchecked.size()-1;
+				unchecked.get(index).dist=0;
+				current=unchecked.get(index);
+			}
+		}
+	}
+	Interwrap setCurrent(ArrayList<Interwrap> unchecked,Interwrap current){//adds neighbors of the smallest unchecked node
+		
+		for(Road road:current.inter.roads){//check neighbors of current
+			Intersection i;
+			if (road.end==current.inter){
+				i= road.start;
+			}
+			else{
+				i= road.end;
+			}
+			for(Interwrap n:unchecked){
+				if (n.inter==i){
+					
+					neighbor(current,n,road.length);
+				}
+			}
+		}
+		
+		unchecked.remove(current);
+		
+		//set current to next closest unchecked
+		int index=-1;
+		int close=Integer.MAX_VALUE;
+		for(Interwrap inter:unchecked){
+			if (inter.dist<close){
+				close=inter.dist;
+				index=unchecked.indexOf(inter);
+			}
+		}
+		current=unchecked.get(index);
+		return current;
+	}
+	void neighbor(Interwrap current,Interwrap n,int length){
+		//takes total distance to neighboring node and neighboring node
+		if (n.dist>current.dist+length){
+			n.dist=current.dist+length;
+			n.path= new ArrayList<Intersection>(current.path);
+			n.path.add(current.inter);
+		}
+	}
+	
+	
+	public ArrayList<Intersection> dijkstra(Intersection src, Intersection dst){
+		//one more time
+		Interwrap current=null;
+		ArrayList<Interwrap> unchecked=new ArrayList<Interwrap>();
+		
+		//init
+		for(Intersection inter: this.intersections){
+			unchecked.add(new Interwrap(inter));
+			if( inter==src){
+				int index=unchecked.size()-1;
+				unchecked.get(index).dist=0;
+				current=unchecked.get(index);
+			}
+		}
+		//end init
+		
+		while(current.inter!=dst){
+			current=setCurrent(unchecked, current);
+		}
+		current.path.add(current.inter);
+		return current.path;
+	}
+	
+	
+	
 //	public List<Intersection> dijkstra(Intersection src,Intersection dst){
 //		//lets try again
 //		class Interwrap{
