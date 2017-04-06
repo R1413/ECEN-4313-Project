@@ -15,14 +15,14 @@ public class CityMap {
 		private int speedLimit;
 		private int length; 
 		private Intersection end;
-		private Intersection start;
 		
-		public Road(int speedLimit, int length, Intersection end, Intersection start){
+		
+		public Road(int speedLimit, int length, Intersection end){
 			this.speedLimit = speedLimit;
 			this.length = length;
 			//this.end = new Intersection();
 			this.end = end;
-			this.start=start;
+			
 		}
 	}
 	
@@ -63,6 +63,93 @@ public class CityMap {
 	public void addIntersection(String edge){
 		//Use formatting of string to build connections
 	}
+	
+	
+	public Intersection getrandom(){
+		Random r=new Random();
+		return intersections[r.nextInt(intersections.length-1)];
+	}
+	
+	//-----Dijksta's algorithm stuff-----
+	class Interwrap{
+		ArrayList<Intersection> path;
+		final Intersection inter;
+		int dist=Integer.MAX_VALUE;
+		Interwrap(Intersection i){
+			inter=i;
+		}
+	}
+	void initDjk(ArrayList<Interwrap> unchecked, Interwrap current,Intersection src){//initializes dijkstra's algorithm
+		for(Intersection inter: this.intersections){
+			unchecked.add(new Interwrap(inter));
+			if( inter==src){
+				int index=unchecked.size()-1;
+				unchecked.get(index).dist=0;
+				current=unchecked.get(index);
+			}
+		}
+	}
+	Interwrap setCurrent(ArrayList<Interwrap> unchecked,Interwrap current){//adds neighbors of the smallest unchecked node
+		
+		for(Road road:current.inter.roads){//check neighbors of current
+			Intersection i=road.end;
+			for(Interwrap n:unchecked){
+				if (n.inter==i){
+					
+					neighbor(current,n,road.length);
+				}
+			}
+		}
+		
+		unchecked.remove(current);
+		
+		//set current to next closest unchecked
+		int index=-1;
+		int close=Integer.MAX_VALUE;
+		for(Interwrap inter:unchecked){
+			if (inter.dist<close){
+				close=inter.dist;
+				index=unchecked.indexOf(inter);
+			}
+		}
+		current=unchecked.get(index);
+		return current;
+	}
+	void neighbor(Interwrap current,Interwrap n,int length){
+		//takes total distance to neighboring node and neighboring node
+		if (n.dist>current.dist+length){
+			n.dist=current.dist+length;
+			n.path= new ArrayList<Intersection>(current.path);
+			n.path.add(current.inter);
+		}
+	}
+	
+	
+	public Intersection[] dijkstra(Intersection src, Intersection dst){
+		//one more time
+		Interwrap current=null;
+		ArrayList<Interwrap> unchecked=new ArrayList<Interwrap>();
+		
+		//init
+		for(Intersection inter: this.intersections){
+			unchecked.add(new Interwrap(inter));
+			if( inter==src){
+				int index=unchecked.size()-1;
+				unchecked.get(index).dist=0;
+				current=unchecked.get(index);
+			}
+		}
+		//end init
+		
+		while(current.inter!=dst){
+			current=setCurrent(unchecked, current);
+		}
+		current.path.add(current.inter);
+		return current.path.toArray(new Intersection[current.path.size()]);
+	}
+	
+	
+	
 //	public List<Intersection> dijkstra(Intersection src,Intersection dst){
 //		//lets try again
 //		class Interwrap{
