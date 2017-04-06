@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.*;
 
 
@@ -29,8 +30,34 @@ public class CityMap {
 	private Road roads[];
 	//private Map<(int,int),Intersection> lookup;
 	
-	public CityMap(){
+	public CityMap(String mapFile){
 		//Create City map, initialize any variables
+		Reader filereader = null;
+		try {
+			filereader = new FileReader(mapFile);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		BufferedReader in = new BufferedReader( filereader);
+		String line;
+		String[] splitLine;
+		int[] digits = new int[4];
+		try {
+			while((line = in.readLine()) != null){
+				splitLine = line.split("(\\]\\^\\[)|(, )|(\\[|\\])");	//Line is split so that the four digits are indices 1 - 4
+				//System.out.println(splitLine[0]);
+				for(int i = 1; i < 5; i++){
+					digits[i-1] = Integer.parseInt(splitLine[i]);
+				}
+				
+				//Lines split into digits
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void addIntersection(String edge){
