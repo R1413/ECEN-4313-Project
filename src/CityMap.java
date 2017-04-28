@@ -51,7 +51,7 @@ public class CityMap {
 	public int MAX_INTERSECTIONS=100;
 	private Intersection intersections[]=new Intersection[MAX_INTERSECTIONS];
 	private int internum=0;
-	private Road roads[]=new Road[MAX_INTERSECTIONS*8];
+	private Road roads[]=new Road[MAX_INTERSECTIONS*4];
 	private int roadnum=0;
 	//private Map<(int,int),Intersection> lookup;
 	

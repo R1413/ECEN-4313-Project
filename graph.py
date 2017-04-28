@@ -16,6 +16,9 @@ class node():
 		
 	def getlocation(self):
 		return self.location
+	def setlocation(self,x,y):
+		self.location=[x,y]
+		return 0
 	
 	def addedge(self, node, e):
 		if self.aloc==self.edgenumber:
@@ -94,6 +97,24 @@ def connect(nodes):
 	return edges
 while not edges:
 	edges=connect(nodes)
+	
+newnodes=[]
+def normal(edges):
+	newedges=[]
+	for e in edges:
+		x=e[0].getlocation()[0]
+		y=e[1].getlocation()[1]
+		n=node(4)
+		
+		n.setlocation(x,y)
+		
+		newnodes.append(n)
+		newedges.append([e[0],n])
+		newedges.append([n,e[1]])
+		print newedges
+	return newedges
+
+edges=normal(edges)
 
 for e in edges:
 	print str(e[0].getlocation())+"^"+str(e[1].getlocation())
