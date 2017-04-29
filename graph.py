@@ -111,7 +111,7 @@ def normal(edges):
 		newnodes.append(n)
 		newedges.append([e[0],n])
 		newedges.append([n,e[1]])
-		print newedges
+		#print newedges
 	return newedges
 
 edges=normal(edges)
