@@ -1,22 +1,55 @@
+import java.util.Map;
 
 public class Intersection {
-	public class Road {
-		private int speedLimit;
-		private int length;	
-		private Intersection end;
-		
-		public Road(int speedLimit, int length, Intersection end){
-			this.speedLimit = speedLimit;
-			this.length = length;
-			this.end = end;
-		}
+	private int SPEEDLIMIT = 40; //In km per hour
+	
+	private String name;
+	private Map<String, Road> connections;
+	private int numConnections;	//May be used for something later
+	
+	public Intersection(String name){
+		this.name = name;
+		numConnections = 0;
 	}
 	
-	private Road road[];
-	public int[] coords;
-	public Intersection(){
-		//Create an intersection from a node on a graph
-		
-		
+	public void addConnection(Intersection connection, int distance){
+		//Default speedLimit of SPEEDLIMIT
+		if(connections.containsValue(connection)){
+			throw new RuntimeException("Connection between " + name  + " and " + connection.getName() + " already exists");
+		}
+		Road newRoad = new Road(connection, SPEEDLIMIT, distance);
+		connections.put(connection.getName(), newRoad);
+		numConnections++;
+	}
+	
+	public void addConnection(Intersection connection, int speedLimit, int distance){
+		//Custom speedLimit
+		if(connections.containsValue(connection)){
+			throw new RuntimeException("Connection between " + name  + " and " + connection.getName() + " already exists");
+		}
+		Road newRoad = new Road(connection, speedLimit, distance);
+		connections.put(connection.getName(), newRoad);
+		numConnections++;
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public Road getConnection(String connection){
+		//Returns the road associated with a connection
+		return connections.get(connection);
+	}
+	
+	public Map<String, Road> getConnections(){
+		//Returns the Map of String->Road pairs
+		return connections;
+	}
+	
+	public void printConnections(){
+		//Prints all entries in the connection map
+		for(Map.Entry<String, Road> entry : connections.entrySet()){
+			System.out.println("\t" + entry.getKey());
+		}
 	}
 }
