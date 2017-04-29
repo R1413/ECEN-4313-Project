@@ -3,10 +3,9 @@ import java.util.*;
 public abstract class Vehicle {
 	private int length;
 	private int speed;
-	private int acc;
-	private int dec;
 	private Stack<String> path;
 	private String home;
+	private double location;
 	
 	private VehicleType vehicleType;
 	public Vehicle(String h){
@@ -16,8 +15,6 @@ public abstract class Vehicle {
 		//Choose vehicle attributes based on vehicle type
 		if(vehicleType == VehicleType.Car){
 			length = 3; // in meters
-			acc = 5; //in meters per second
-			dec = acc;
 		}
 		
 		//Chose home and some number of destinations
@@ -36,5 +33,15 @@ public abstract class Vehicle {
 		//added later
 	}
 	
+	double advance(double roadLen){// changes location and returns distance past end of road vehicle has traveled if any. else returns 0
+		location+=speed;
+		if(location>roadLen){
+			return location-roadLen;
+		}
+		return 0;
+	}
+	void setLocation(double newLoc){//when moving car to new road, add previous distance
+		location=newLoc;
+	}
 
 }
