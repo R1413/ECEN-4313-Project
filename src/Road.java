@@ -1,16 +1,16 @@
 
 public class Road {
-	private int speedLimit;
-	private int length;
+	private double speedLimit;
+	private double length;
 	private Intersection end;
 	
-	public Road(Intersection end, int speedLimit, int length){
+	public Road(Intersection end, double speedLimit, double length){
 		this.end = end;
 		this.speedLimit = speedLimit;
 		this.length = length;
 	}
 
-	public int getSpeedLimit() {
+	public double getSpeedLimit() {
 		return speedLimit;
 	}
 
@@ -18,11 +18,11 @@ public class Road {
 		this.speedLimit = speedLimit;
 	}
 
-	public int getLength() {
+	public double getLength() {
 		return length;
 	}
 
-	public void setLength(int length) {
+	public void setLength(double length) {
 		this.length = length;
 	}
 

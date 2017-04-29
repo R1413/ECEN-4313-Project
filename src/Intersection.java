@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.Map;
 
 public class Intersection {
@@ -9,10 +10,11 @@ public class Intersection {
 	
 	public Intersection(String name){
 		this.name = name;
+		connections = new HashMap<String,Road>();
 		numConnections = 0;
 	}
 	
-	public void addConnection(Intersection connection, int distance){
+	public void addConnection(Intersection connection, double distance){
 		//Default speedLimit of SPEEDLIMIT
 		if(connections.containsValue(connection)){
 			throw new RuntimeException("Connection between " + name  + " and " + connection.getName() + " already exists");
@@ -22,7 +24,7 @@ public class Intersection {
 		numConnections++;
 	}
 	
-	public void addConnection(Intersection connection, int speedLimit, int distance){
+	public void addConnection(Intersection connection, double distance, double speedLimit){
 		//Custom speedLimit
 		if(connections.containsValue(connection)){
 			throw new RuntimeException("Connection between " + name  + " and " + connection.getName() + " already exists");

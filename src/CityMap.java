@@ -3,59 +3,18 @@ import java.util.*;
 
 
 public class CityMap {
-	private class Intersection{
-		private Road roadlist[];
-		private int r=0;
-		private String name="";// "42,-13"
-		
-		private Intersection(String a){
-			roadlist= new Road[4];
-			name=a;
-			intersections[internum]=this;
-			internum=internum+1;
-			//Do something?
-			System.out.print("made "+name+"\n");
-		}
-		private void addRoad(Intersection end){
-			int speedlimit=25;
-			int[] coords=new int[4];
-			String n= new String(name);
-			String[] split= n.split(",");
-			coords[0]=Integer.parseInt(split[0]);
-			coords[1]=Integer.parseInt(split[1]);
-			n=new String(end.name);
-			split=n.split(",");
-			coords[2]=Integer.parseInt(split[0]);
-			coords[3]=Integer.parseInt(split[1]);
-			int length=(int) Math.sqrt((coords[0]-coords[2])^2+(coords[1]-coords[3]^2));System.out.print("making road from "+name+" to "+end.name+"\n");
-			roadlist[r]=new Road(speedlimit,length,end);
-			roads[roadnum]=roadlist[r];
-			r=r+1;
-			roadnum=roadnum+1;
-		}
-	}
-	public class Road{
-		private int speedLimit;
-		private int length; 
-		private Intersection end;
-		
-		
-		public Road(int speedLimit, int length, Intersection end){
-			this.speedLimit = speedLimit;
-			this.length = length;
-			//this.end = new Intersection();
-			this.end = end;
-			//System.out.print("made road from "+name+" to "+end.name+"\n");
-		}
-	}
-	public int MAX_INTERSECTIONS=100;
-	private Intersection intersections[]=new Intersection[MAX_INTERSECTIONS];
-	private int internum=0;
-	private Road roads[]=new Road[MAX_INTERSECTIONS*4];
-	private int roadnum=0;
-	//private Map<(int,int),Intersection> lookup;
+	
+//	public int MAX_INTERSECTIONS=100;
+//	private Intersection intersections[]=new Intersection[MAX_INTERSECTIONS];
+//	private int internum=0;
+//	private Road roads[]=new Road[MAX_INTERSECTIONS*4];
+//	private int roadnum=0;
+	private Map<String,Intersection> intersections;
+	private int numIntersections;
 	
 	public CityMap(String mapFile){
+		intersections = new HashMap<String,Intersection>();
+		numIntersections = 0;
 		//Create City map, initialize any variables
 		Reader filereader = null;
 		try {
@@ -68,45 +27,53 @@ public class CityMap {
 		BufferedReader in = new BufferedReader( filereader);
 		String line;
 		String[] splitLine;
-		int[] digits = new int[4];
+		double[] digits = new double[4];
 		try {
 			while((line = in.readLine()) != null){
 				splitLine = line.split("(\\]\\^\\[)|(, )|(\\[|\\])");	//Line is split so that the four digits are indices 1 - 4
-				//System.out.println(splitLine[0]);
 				for(int i = 1; i < 5; i++){
 					digits[i-1] = Integer.parseInt(splitLine[i]);
 				}//Lines split into digits
 				
-				String name1=Integer.toString(digits[0]).concat(",").concat(Integer.toString(digits[1]));//name of intersections
-				Intersection a=findInter(name1);
-				String name2=Integer.toString(digits[2]).concat(",").concat(Integer.toString(digits[3]));
-				Intersection b=findInter(name2);
+				String name1=Double.toString(digits[0]).concat(",").concat(Double.toString(digits[1]));//name of intersections
+				String name2=Double.toString(digits[2]).concat(",").concat(Double.toString(digits[3]));
+				double distance = Math.sqrt(Math.pow(digits[0]-digits[2], 2)+ Math.pow(digits[1]-digits[3], 2));
 				
-				if(a==null)a=new Intersection(name1);//allocate new intersections
-				if(b==null)b=new Intersection(name2);
+				Intersection intersection1, intersection2;
+				if(intersections.containsKey(name1)){
+					intersection1 = intersections.get(name1);
+				} else { 
+					intersection1 = new Intersection(name1);
+					intersections.put(name1, intersection1);
+					numIntersections++;
+				}
+				if(intersections.containsKey(name2)){
+					intersection2 = intersections.get(name2);
+				} else { 
+					intersection2 = new Intersection(name2);
+					intersections.put(name2, intersection2);
+					numIntersections++;
+				}
 				
-				a.addRoad(b);//make roads
-				b.addRoad(a);
+				intersection1.addConnection(intersection2, distance);
+				intersection2.addConnection(intersection1, distance);
+
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	public Intersection findInter(String name){
-		System.out.print("finding "+name+"\n");
-		if(internum==0)return null;
-		for(Intersection i:intersections){
-			if(i==null)return null;
-			if(i.name.equals(name)) return i;
-		}
-		//shouldnt get here
-		return null;
-	}
 
 	public void addIntersection(String edge){
 		//Use formatting of string to build connections
+	}
+	
+	public void printGraph(){
+		for(Map.Entry<String, Intersection> entry : intersections.entrySet()){
+			System.out.println(entry.getKey());
+			entry.getValue().printConnections();
+		}
 	}
 	
 	
