@@ -3,24 +3,24 @@ import java.util.Stack;
 
 public class Dijkstra {
 	Map<String,Intersection> intersections;
-	private Map<String,Integer> distances;
-	private Map<String,Integer> unchecked;
+	private Map<String,Double> distances;
+	private Map<String, Double> unchecked;
 	private Map<String,String> prev;
 
 	public Dijkstra(Map<String,Intersection> input) {
 		// TODO Auto-generated constructor stub
 		intersections=input;
 			for(Map.Entry<String,Intersection> m:intersections.entrySet()){
-				distances.put(m.getKey(),Integer.MAX_VALUE);
+				distances.put(m.getKey(),Double.MAX_VALUE);
 			}
 	}
 	void findNext(String current){//finds current's neighbors and sets minimum distances. if neighbor hasn't been added, adds them to unchecked. Sets changed neighbors' previous pointer to current.
 		Intersection inter=intersections.get(current);
 		Map<String,Road> node =inter.getConnections();
-		int curDist=distances.get(current);
+		Double curDist=distances.get(current);
 		for(Map.Entry<String,Road> road:node.entrySet()){
 			String key=road.getKey();
-			int newDist=curDist+road.getValue().getLength();
+			Double newDist= curDist+road.getValue().getLength();
 			if (distances.get(key)>newDist){
 				if(distances.get(key)==Integer.MAX_VALUE){
 					unchecked.put(key, newDist);
@@ -30,10 +30,10 @@ public class Dijkstra {
 			}
 		}
 	}
-	String findMin(Map<String,Integer> m){//returns minimum distance
-		int minVal=Integer.MAX_VALUE;
+	String findMin(Map<String,Double> m){//returns minimum distance
+		double minVal=Double.MAX_VALUE;
 		String minStr = null;
-		for(Map.Entry<String, Integer> a:m.entrySet()){
+		for(Map.Entry<String, Double> a:m.entrySet()){
 			if(a.getValue()<minVal){
 				minVal=a.getValue();
 				minStr=a.getKey();
@@ -48,9 +48,9 @@ public class Dijkstra {
 		unchecked.remove(current);
 	}
 	
-	Stack<String> findPath(String start,String end){
-			distances.put(start, 0);
-			unchecked.put(start, 0);
+	Stack<String> findPath(String start,String end){//returns a stack of string keys to all next intersections on the shortest path
+			distances.put(start, (double) 0);
+			unchecked.put(start, (double) 0);
 			String current=start;
 			while(current!=end){
 				evaluate(current);
