@@ -4,17 +4,21 @@ import java.util.concurrent.*;
 public class Driver {
 
 	private static int NUM_THREADS = 1;
+	//<threadpool>
+	ExecutorService  e= Executors.newFixedThreadPool(NUM_THREADS);
+	//</threadpool>
+	
 	private int NUM_VEHICLES = 20;
 	private static Queue<Vehicle> vehicleQueue = new ConcurrentLinkedQueue<Vehicle>();
 	public static void main(String[] args) {
-		CityMap cityMap = new CityMap("./map.txt");
+		final CityMap cityMap = new CityMap("./map.txt");
 		Thread[] thread = new Thread[NUM_THREADS];
 		for(Thread threadI: thread){
 			threadI = new Thread(new Runnable(){
 				public void run(){
 					Vehicle vehicle = vehicleQueue.poll();
 					if(vehicle != null){
-						cityMap.getRandomIntersection()
+						cityMap.getRandomIntersection();
 						vehicle.advance(roadLen);
 					}
 				}

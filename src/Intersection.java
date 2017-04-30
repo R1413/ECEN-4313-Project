@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Queue;
 
 
 
@@ -64,8 +65,8 @@ public class Intersection {
 		
 		
 	}
-	public void greenLight(String connection){
-		
+	public Queue<Vehicle> greenLight(String connection){
+		return connections.get(connection).green();
 		
 	}
 }

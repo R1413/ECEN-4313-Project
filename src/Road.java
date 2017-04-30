@@ -1,23 +1,21 @@
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class Road {
 	private double speedLimit;
 	private double length;
 	private Intersection end;
-	private Lock interlock=new ReentrantLock();
-	private Condition intercon=interlock.newCondition();
 	private boolean signal;
 	private Queue<Vehicle> waitingcars;
 	private List<Vehicle> allcars;
+	public String id;
 	
-	public Road(Intersection end, double speedLimit, double length){
+	public Road(Intersection end, double speedLimit, double length,String ID){
 		this.end = end;
 		this.speedLimit = speedLimit;
 		this.length = length;
+		this.id=ID;
 	}
 
 	public double getSpeedLimit() {
@@ -47,9 +45,11 @@ public class Road {
 	public void red(){
 		signal=true;
 	}
-	public void green(){
+	public Queue<Vehicle> green(){
 		signal=false;
-		//add some callable to the threadpool
+		Queue<Vehicle> waiting=waitingcars;
+		waitingcars=new LinkedList<Vehicle>();
+		return waiting;
 	}
 	
 	public boolean getSignal() {
@@ -66,12 +66,13 @@ public class Road {
 		}
 		return true;
 	}
-	public String advanceOnRoad(Vehicle car){
+	public String advanceVehicle(Vehicle car){
 		double dist=car.advance(length);
 		if(dist>0){
 			if(signal|(waitingcars.size()>0)){
 				waitingcars.add(car);
 				car.setLocation(length);
+				return id;
 			}
 			else{
 				car.setLocation(dist);
@@ -86,6 +87,5 @@ public class Road {
 		car.setLocation(dist);
 		allcars.remove(car);
 		return car.nextRoad();
-		
 	}
 }
