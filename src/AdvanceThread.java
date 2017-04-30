@@ -24,6 +24,7 @@ public class AdvanceThread implements Runnable{
 			else{
 				Road r= road.getEnd().getConnection(result);
 				Runnable next=new AdvanceThread(car,r,executor);
+				r.addVehicle(car);
 				executor.execute(next);
 			}
 		}
