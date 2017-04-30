@@ -1,12 +1,16 @@
 import java.util.HashMap;
 import java.util.Map;
 
+
+
 public class Intersection {
 	private int SPEEDLIMIT = 40; //In km per hour
 	
 	private String name;
 	private Map<String, Road> connections;
 	private int numConnections;	//May be used for something later
+	
+	
 	
 	public Intersection(String name){
 		this.name = name;
@@ -21,6 +25,7 @@ public class Intersection {
 		}
 		Road newRoad = new Road(connection, SPEEDLIMIT, distance);
 		connections.put(connection.getName(), newRoad);
+		
 		numConnections++;
 	}
 	
@@ -53,5 +58,14 @@ public class Intersection {
 		for(Map.Entry<String, Road> entry : connections.entrySet()){
 			System.out.println("\t" + entry.getKey());
 		}
+	}
+	
+	public void redLight(String connection){
+		
+		
+	}
+	public void greenLight(String connection){
+		
+		
 	}
 }

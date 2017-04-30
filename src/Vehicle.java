@@ -43,5 +43,10 @@ public abstract class Vehicle {
 	void setLocation(double newLoc){//when moving car to new road, add previous distance
 		location=newLoc;
 	}
-
+	String nextRoad(){
+		return path.pop();
+	}
+	double getLocation(){
+		return location;
+	}
 }
