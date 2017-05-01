@@ -98,7 +98,7 @@ public class Road {
 			else{
 				car.setLocation(dist);
 				drivingcars.remove(car);
-				return car.nextRoad();
+				return "next";
 			}
 		}
 		return null;
@@ -107,6 +107,6 @@ public class Road {
 		double dist=car.advance(length);
 		car.setLocation(dist);
 		drivingcars.remove(car);
-		return car.nextRoad();
+		return "next";
 	}
 }

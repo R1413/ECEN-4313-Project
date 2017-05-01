@@ -4,9 +4,7 @@ import java.util.concurrent.*;
 public class Driver {
 
 	private static int NUM_THREADS = 1;
-	 //<threadpool>
-	static ExecutorService  e= Executors.newFixedThreadPool(NUM_THREADS);
-	//</threadpool>
+	
 	
 	private static int NUM_VEHICLES = 20;
 	public static void main(String[] args) {
@@ -15,6 +13,9 @@ public class Driver {
 			cityMap.addVehicle();
 		}
 		ControlLogic brain=new ControlLogic();
+		//<threadpool>
+		ExecutorService  e= Executors.newFixedThreadPool(NUM_THREADS);
+		//</threadpool>
 		Runnable start=new ControlerThread(cityMap, null, e, brain);
 		e.execute(start);
 	}

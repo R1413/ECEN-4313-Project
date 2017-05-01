@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Vehicle {//make abstract once we have examples
 	private int length;
-	private int speed=10;
+	public int speed=10;
 	private Stack<String> path;
 	private Stack<String> backup;
 	public String home;
@@ -13,6 +13,7 @@ public class Vehicle {//make abstract once we have examples
 	private VehicleType vehicleType;
 	public Vehicle(String h,String d,Stack<String> p){
 		//Do Something
+		System.out.println("created car: "+h+"->"+d);
 		this.vehicleType = VehicleType.Car;
 		
 		//Choose vehicle attributes based on vehicle type
@@ -49,13 +50,16 @@ public class Vehicle {//make abstract once we have examples
 		location=newLoc;
 	}
 	String nextRoad(){
+		
 		tracking++;
 		String str;
 		try{str=path.pop();
-		}catch(NullPointerException e){
-			return null;
 		}catch(EmptyStackException e){
-			return null;
+			return "finished";
+		}
+		System.out.println("car: "+home+"->"+dest+" moving to "+str);
+		if(str==dest){
+			System.out.println("Finished car : "+home+"->"+dest);
 		}
 		return str;
 	}
