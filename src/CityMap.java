@@ -6,6 +6,7 @@ public class CityMap {
 	
 	//Fields
 	private Map<String,Intersection> intersections;
+	private List<Vehicle> vehicles;
 	private int numIntersections;
 	
 	//Constructors
@@ -60,6 +61,14 @@ public class CityMap {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void addVehicle(){
+		Dijkstra dij=new Dijkstra(intersections);
+		String home=getRandomIntersection();
+		String dest=getRandomIntersection();
+		Vehicle v=new Vehicle(home,dij.findPath(home, dest));//only heads out. does not go home
+		vehicles.add(v);
 	}
 	
 	//Methods

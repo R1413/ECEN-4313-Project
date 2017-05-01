@@ -24,7 +24,7 @@ public class Intersection {
 		if(connections.containsValue(connection)){
 			throw new RuntimeException("Connection between " + name  + " and " + connection.getName() + " already exists");
 		}
-		Road newRoad = new Road(connection, SPEEDLIMIT, distance);
+		Road newRoad = new Road(connection, SPEEDLIMIT, distance, connection.getName());
 		connections.put(connection.getName(), newRoad);
 		
 		numConnections++;
@@ -35,7 +35,7 @@ public class Intersection {
 		if(connections.containsValue(connection)){
 			throw new RuntimeException("Connection between " + name  + " and " + connection.getName() + " already exists");
 		}
-		Road newRoad = new Road(connection, speedLimit, distance);
+		Road newRoad = new Road(connection, speedLimit, distance, connection.getName());
 		connections.put(connection.getName(), newRoad);
 		numConnections++;
 	}
@@ -62,7 +62,7 @@ public class Intersection {
 	}
 	
 	public void redLight(String connection){
-		
+		connections.get(connection).red();
 		
 	}
 	public Queue<Vehicle> greenLight(String connection){

@@ -1,6 +1,6 @@
 import java.util.*;
 
-public abstract class Vehicle {
+public class Vehicle {//make abstract once we have examples
 	private int length;
 	private int speed;
 	private Stack<String> path;
@@ -8,7 +8,7 @@ public abstract class Vehicle {
 	private double location;
 	
 	private VehicleType vehicleType;
-	public Vehicle(String h){
+	public Vehicle(String h,Stack<String> p){
 		//Do Something
 		this.vehicleType = VehicleType.Car;
 		
@@ -28,7 +28,7 @@ public abstract class Vehicle {
 		*/
 		
 		//Fill path stack;
-		
+		path=p;
 		//Choose vehicle behavior based on driving style
 		//added later
 	}
