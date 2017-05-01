@@ -8,7 +8,7 @@ public class Road {
 	private Intersection end;
 	private boolean signal;
 	private Queue<Vehicle> waitingcars;
-	private List<Vehicle> allcars;
+	private List<Vehicle> drivingcars;
 	public String id;
 	
 	public Road(Intersection end, double speedLimit, double length,String ID){
@@ -42,6 +42,10 @@ public class Road {
 		this.end = end;
 	}
 	
+	public List<Vehicle> getMoving(){
+		return drivingcars;
+	}
+	
 	public void red(){
 		signal=true;
 	}
@@ -64,19 +68,21 @@ public class Road {
 			car.setLocation(car.getLocation()-length);
 			return false;
 		}
+		drivingcars.add(car);
 		return true;
 	}
 	public String advanceVehicle(Vehicle car){
 		double dist=car.advance(length);
 		if(dist>0){
 			if(signal|(waitingcars.size()>0)){
+				drivingcars.remove(car);
 				waitingcars.add(car);
 				car.setLocation(length);
 				return id;
 			}
 			else{
 				car.setLocation(dist);
-				allcars.remove(car);
+				drivingcars.remove(car);
 				return car.nextRoad();
 			}
 		}
@@ -85,7 +91,7 @@ public class Road {
 	public String advanceOnInter(Vehicle car){
 		double dist=car.advance(length);
 		car.setLocation(dist);
-		allcars.remove(car);
+		drivingcars.remove(car);
 		return car.nextRoad();
 	}
 }

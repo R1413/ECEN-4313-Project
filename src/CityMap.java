@@ -82,6 +82,9 @@ public class CityMap {
 			entry.getValue().printConnections();
 		}
 	}
+	public Map<String,Intersection> getIntersections(){
+		return intersections;
+	}
 	
 	
 	public String getRandomIntersection(){

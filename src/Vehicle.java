@@ -44,7 +44,12 @@ public class Vehicle {//make abstract once we have examples
 		location=newLoc;
 	}
 	String nextRoad(){
-		return path.pop();
+		String str=path.pop();
+		try{
+		}catch(NullPointerException e){
+			return null;
+		}
+		return str;
 	}
 	double getLocation(){
 		return location;

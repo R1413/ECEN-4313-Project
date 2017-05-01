@@ -17,6 +17,9 @@ public class AdvanceThread implements Runnable{
 	public void run(){//advance vehicles
 		if(waiting){
 			String result=road.advanceOnInter(car);
+			if(result.equals(null)){//Finished
+				return;
+			}
 			Road r= road.getEnd().getConnection(result);
 			Runnable next=new AdvanceThread(car,false,r,executor);
 			r.addVehicle(car);
