@@ -4,11 +4,14 @@ public class Vehicle {//make abstract once we have examples
 	private int length;
 	private int speed=10;
 	private Stack<String> path;
-	private String home;
+	private Stack<String> backup;
+	public String home;
+	public String dest;
 	private double location;
+	public int tracking=0;
 	
 	private VehicleType vehicleType;
-	public Vehicle(String h,Stack<String> p){
+	public Vehicle(String h,String d,Stack<String> p){
 		//Do Something
 		this.vehicleType = VehicleType.Car;
 		
@@ -19,6 +22,7 @@ public class Vehicle {//make abstract once we have examples
 		
 		//Chose home and some number of destinations
 		home=h;
+		dest=d;
 		/*Random random = new Random();
 		home=map.get(random.nextInt(map.size())).getName();
 		dests=new String[random.nextInt(map.size())];
@@ -29,6 +33,7 @@ public class Vehicle {//make abstract once we have examples
 		
 		//Fill path stack;
 		path=p;
+		backup=(Stack<String>) p.clone();
 		//Choose vehicle behavior based on driving style
 		//added later
 	}
@@ -44,6 +49,7 @@ public class Vehicle {//make abstract once we have examples
 		location=newLoc;
 	}
 	String nextRoad(){
+		tracking++;
 		String str;
 		try{str=path.pop();
 		}catch(NullPointerException e){
@@ -55,5 +61,11 @@ public class Vehicle {//make abstract once we have examples
 	}
 	double getLocation(){
 		return location;
+	}
+	String peakPath(){
+		return path.peek();
+	}
+	void pushPath(String wtf){//I dont know why but I think I need this
+		path.add(wtf);
 	}
 }

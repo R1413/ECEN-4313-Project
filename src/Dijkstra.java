@@ -24,6 +24,7 @@ public class Dijkstra {
 		for(Map.Entry<String,Road> road:node.entrySet()){
 			String key=road.getKey();
 			Double newDist= curDist+road.getValue().getLength();
+			//if(newDist<=0)System.out.println("adskl;fj");
 			if (distances.get(key)>newDist){//System.out.println("hi");
 				if(distances.get(key).equals(Double.MAX_VALUE)){
 					unchecked.put(key, newDist);

@@ -52,7 +52,6 @@ public class CityMap {
 					intersections.put(name2, intersection2);
 					numIntersections++;
 				}
-				
 				intersection1.addConnection(intersection2, distance);
 				intersection2.addConnection(intersection1, distance);
 
@@ -67,7 +66,10 @@ public class CityMap {
 		Dijkstra dij=new Dijkstra(intersections);
 		String home=getRandomIntersection();
 		String dest=getRandomIntersection();
-		Vehicle v=new Vehicle(home,dij.findPath(home, dest));//only heads out. does not go home
+		while(home.equals(dest)){
+			dest=getRandomIntersection();
+		}
+		Vehicle v=new Vehicle(home,dest,dij.findPath(home, dest));//only heads out. does not go home
 		vehicles.add(v);
 		intersections.get(home).getConnection(v.nextRoad()).addVehicle(v);
 	}

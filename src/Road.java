@@ -46,6 +46,15 @@ public class Road {
 	public List<Vehicle> getMoving(){
 		return drivingcars;
 	}
+	public boolean isWaiting(){
+		return!(waitingcars.isEmpty());
+	}
+	public boolean removeWaiting(Vehicle car){
+		return waitingcars.remove(car);
+	}
+	public boolean removeRunning(Vehicle car){
+		return drivingcars.remove(car);
+	}
 	
 	public void red(){
 		signal=true;
@@ -72,6 +81,11 @@ public class Road {
 		drivingcars.add(car);
 		return true;
 	}
+	public void addWaiting(Vehicle car){
+		car.setLocation(length);
+		waitingcars.add(car);
+	}
+	
 	public String advanceVehicle(Vehicle car){
 		double dist=car.advance(length);
 		if(dist>0){
