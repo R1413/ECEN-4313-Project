@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -7,8 +8,8 @@ public class Road {
 	private double length;
 	private Intersection end;
 	private boolean signal;
-	private Queue<Vehicle> waitingcars;
-	private List<Vehicle> drivingcars;
+	private Queue<Vehicle> waitingcars=new LinkedList<Vehicle>();
+	private List<Vehicle> drivingcars=new ArrayList<Vehicle>();
 	public String id;
 	
 	public Road(Intersection end, double speedLimit, double length,String ID){

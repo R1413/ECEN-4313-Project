@@ -21,9 +21,11 @@ public class LightsThread implements Runnable{
 		if(command==1){
 			Queue<Vehicle> result=inter.greenLight(road);
 			Vehicle car;
-			while((car=result.poll()) != null){
+			car=result.poll();
+			while(car != null){
 				Runnable next=new AdvanceThread(car,true,inter.getConnection(road),executor);
 				executor.execute(next);
+				car=result.poll();
 			}
 		}
 	}

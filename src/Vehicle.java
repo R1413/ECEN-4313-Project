@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Vehicle {//make abstract once we have examples
 	private int length;
-	private int speed;
+	private int speed=10;
 	private Stack<String> path;
 	private String home;
 	private double location;
@@ -44,9 +44,11 @@ public class Vehicle {//make abstract once we have examples
 		location=newLoc;
 	}
 	String nextRoad(){
-		String str=path.pop();
-		try{
+		String str;
+		try{str=path.pop();
 		}catch(NullPointerException e){
+			return null;
+		}catch(EmptyStackException e){
 			return null;
 		}
 		return str;

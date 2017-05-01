@@ -4,8 +4,8 @@ import java.util.concurrent.*;
 public class Driver {
 
 	private static int NUM_THREADS = 1;
-	//<threadpool>
-	ExecutorService  e= Executors.newFixedThreadPool(NUM_THREADS);
+	 //<threadpool>
+	static ExecutorService  e= Executors.newFixedThreadPool(NUM_THREADS);
 	//</threadpool>
 	
 	private static int NUM_VEHICLES = 20;
@@ -14,6 +14,9 @@ public class Driver {
 		for(int i=0;i<NUM_VEHICLES;i++){
 			cityMap.addVehicle();
 		}
+		ControlLogic brain=new ControlLogic();
+		Runnable start=new ControlerThread(cityMap, null, e, brain);
+		e.execute(start);
 	}
 
 }

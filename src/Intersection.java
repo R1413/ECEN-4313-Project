@@ -8,7 +8,7 @@ public class Intersection {
 	private int SPEEDLIMIT = 40; //In km per hour
 	
 	private String name;
-	private Map<String, Road> connections;
+	private Map<String, Road> connections=new HashMap<String,Road>();
 	private int numConnections;	//May be used for something later
 	
 	
@@ -46,6 +46,7 @@ public class Intersection {
 	
 	public Road getConnection(String connection){
 		//Returns the road associated with a connection
+		System.out.println(connection+" "+this.name);
 		return connections.get(connection);
 	}
 	

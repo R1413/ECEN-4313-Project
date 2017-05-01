@@ -6,7 +6,7 @@ public class CityMap {
 	
 	//Fields
 	private Map<String,Intersection> intersections;
-	private List<Vehicle> vehicles;
+	private List<Vehicle> vehicles=new ArrayList<Vehicle>();
 	private int numIntersections;
 	
 	//Constructors
@@ -69,6 +69,7 @@ public class CityMap {
 		String dest=getRandomIntersection();
 		Vehicle v=new Vehicle(home,dij.findPath(home, dest));//only heads out. does not go home
 		vehicles.add(v);
+		intersections.get(home).getConnection(v.nextRoad()).addVehicle(v);
 	}
 	
 	//Methods
